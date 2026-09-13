@@ -12,7 +12,7 @@ import type { AIProvider } from '../ai';
 // equivalent boto3 setup.
 const ENDPOINT = process.env.BEDROCK_ENDPOINT ?? 'https://bedrock-runtime.aws-proxy.skillerwhale.com/';
 const REGION = process.env.BEDROCK_REGION ?? 'eu-west-1';
-const MODEL_ID = process.env.BEDROCK_MODEL_ID ?? 'eu.anthropic.claude-sonnet-4-5-20250929-v1:0';
+const MODEL_ID = process.env.BEDROCK_MODEL_ID ?? 'eu.anthropic.claude-sonnet-5';
 
 const client = new BedrockRuntimeClient({
   region: REGION,
@@ -33,7 +33,9 @@ export class BedrockProvider implements AIProvider {
         modelId: MODEL_ID,
         system: [{ text: system }],
         messages: [{ role: 'user', content: [{ text: user }] }],
-        inferenceConfig: { maxTokens: 2048, temperature: 0.1 },
+        // Sonnet 5 rejects temperature/top_p. Thinking is off for speed.
+        inferenceConfig: { maxTokens: 3072 },
+        additionalModelRequestFields: { thinking: { type: 'disabled' } },
       }),
     );
     const blocks: ContentBlock[] = response.output?.message?.content ?? [];

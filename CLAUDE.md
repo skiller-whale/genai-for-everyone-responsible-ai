@@ -44,7 +44,7 @@ bunx playwright test   # e2e tests (mocks API calls, auto-starts dev server)
 - `ai.ts` — provider factory; reads `AI_PROVIDER` env var
 - `prompts.ts` — prompt builders for each generation step
 - `parsing.ts` — XML response parsers
-- `providers/claude.ts` — `@anthropic-ai/sdk` wrapper (model: `claude-sonnet-4-6`)
+- `providers/claude.ts` — `@anthropic-ai/sdk` wrapper (model: `claude-sonnet-5`)
 - `providers/ollama.ts` — `ollama` package wrapper
 
 ### Frontend (`src/client/`)
